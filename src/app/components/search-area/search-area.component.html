@@ -1,0 +1,38 @@
+<mat-card class="cg-search-card">
+  <mat-grid-list cols="5" rowHeight="3:1">
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Location</mat-label>
+        <input matInput placeholder="Colombo, Sri Lanka">
+        <mat-icon matSuffix>location_on</mat-icon>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Check In Date</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label># Of Nights</mat-label>
+        <input matInput type="number" placeholder="7">
+        <mat-icon matSuffix>nights_stay</mat-icon>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button class="cg-custom-enlarged-btn"  mat-stroked-button mat-button>
+        <span class="cg-icon-btn-text">Room Guest Count</span>
+        <mat-icon class="cg-title-icon">people_alt</mat-icon>
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-raised-button class="cg-custom-enlarged-btn cg-search-btn" color="primary">
+        <mat-icon class="cg-search-btn-icon">search</mat-icon>
+        <span class="cg-search-btn-text">Search</span>
+      </button>
+    </mat-grid-tile>
+  </mat-grid-list>
+</mat-card>

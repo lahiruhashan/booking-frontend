@@ -1,0 +1,31 @@
+.cg-search-card {
+  width: 80%;
+  margin: 50px auto auto;
+}
+
+.cg-custom-enlarged-btn {
+  height: 63%;
+  margin-bottom: 8%;
+}
+
+.cg-icon-btn-text {
+  margin-right: 55px;
+  font-weight: 400;
+  font-family: Roboto, serif;
+  font-size: 16px;
+  font-stretch: semi-expanded;
+  color: rgba(0, 0, 0, 0.62);
+}
+
+.cg-search-btn {
+  width: 200px;
+}
+
+.cg-search-btn-text {
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+.cg-search-btn-icon {
+  margin-left: -20px;
+}

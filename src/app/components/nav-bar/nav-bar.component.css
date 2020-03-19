@@ -1,0 +1,18 @@
+.cg-spacer {
+  flex: 1 1 auto;
+}
+
+.cg-title-icon {
+  padding: 0 10px;
+}
+
+.cg-title {
+  text-align: center;
+  margin: 0;
+  min-width: 64px;
+  line-height: 36px;
+  border-radius: 4px;
+  overflow: visible;
+  font-size: 16px;
+  font-weight: 500;
+}
