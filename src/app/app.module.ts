@@ -6,9 +6,9 @@ import {AppComponent} from './app.component';
 import {NavBarComponent} from './components/nav-bar/nav-bar.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
-import {MatToolbarModule} from '@angular/material';
+import {MatDialogModule, MatToolbarModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
-import { SearchAreaComponent } from './components/search-area/search-area.component';
+import {RoomGuestDialogComponent, SearchAreaComponent} from './components/search-area/search-area.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -21,7 +21,8 @@ import {MatNativeDateModule} from '@angular/material';
   declarations: [
     AppComponent,
     NavBarComponent,
-    SearchAreaComponent
+    SearchAreaComponent,
+    RoomGuestDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +36,11 @@ import {MatNativeDateModule} from '@angular/material';
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDialogModule
+  ],
+  entryComponents: [
+    RoomGuestDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

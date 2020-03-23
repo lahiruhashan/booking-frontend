@@ -3,13 +3,7 @@
   margin: 50px auto auto;
 }
 
-.cg-custom-enlarged-btn {
-  height: 63%;
-  margin-bottom: 8%;
-}
-
 .cg-icon-btn-text {
-  margin-right: 55px;
   font-weight: 400;
   font-family: Roboto, serif;
   font-size: 16px;
@@ -18,7 +12,12 @@
 }
 
 .cg-search-btn {
-  width: 200px;
+  width: 100%;
+  height: 4em;
+  position: absolute;
+  top: 6px;
+  display: inline-block;
+
 }
 
 .cg-search-btn-text {
@@ -28,4 +27,9 @@
 
 .cg-search-btn-icon {
   margin-left: -20px;
+}
+
+.outlined-input {
+  width: 70% !important;
+  height: 100%;
 }

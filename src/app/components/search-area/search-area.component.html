@@ -1,14 +1,14 @@
 <mat-card class="cg-search-card">
   <mat-grid-list cols="5" rowHeight="3:1">
     <mat-grid-tile>
-      <mat-form-field appearance="outline">
+      <mat-form-field class="outlined-input" appearance="outline">
         <mat-label>Location</mat-label>
         <input matInput placeholder="Colombo, Sri Lanka">
         <mat-icon matSuffix>location_on</mat-icon>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
-      <mat-form-field appearance="outline">
+      <mat-form-field class="outlined-input" appearance="outline">
         <mat-label>Check In Date</mat-label>
         <input matInput [matDatepicker]="picker">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -16,20 +16,21 @@
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
-      <mat-form-field appearance="outline">
+      <mat-form-field class="outlined-input" appearance="outline">
         <mat-label># Of Nights</mat-label>
         <input matInput type="number" placeholder="7">
         <mat-icon matSuffix>nights_stay</mat-icon>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
-      <button class="cg-custom-enlarged-btn"  mat-stroked-button mat-button>
-        <span class="cg-icon-btn-text">Room Guest Count</span>
-        <mat-icon class="cg-title-icon">people_alt</mat-icon>
-      </button>
+      <mat-form-field class="outlined-input" appearance="outline">
+        <mat-label>Room Guest Count</mat-label>
+        <input readonly matInput type="text" (click)="openDialog()" placeholder="1 Room 2 adults">
+        <mat-icon matSuffix>people_alt</mat-icon>
+      </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
-      <button mat-raised-button class="cg-custom-enlarged-btn cg-search-btn" color="primary">
+      <button mat-raised-button class="cg-search-btn" color="primary">
         <mat-icon class="cg-search-btn-icon">search</mat-icon>
         <span class="cg-search-btn-text">Search</span>
       </button>
