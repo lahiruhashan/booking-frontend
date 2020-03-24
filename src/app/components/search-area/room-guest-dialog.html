@@ -1,6 +1,6 @@
-<h1 mat-dialog-title>Enter Room and Guest Counts{{data.categories}}</h1>
+<h1 mat-dialog-title>Enter Room and Guest Counts</h1>
 <div mat-dialog-content>
-  <button  mat-stroked-button color="primary" (click)="addCategories()">Add Category</button>
+  <button  mat-stroked-button color="primary"  [ngStyle]="{marginBottom: '20px'}" (click)="addCategories()">Add Category</button>
   <form>
   <table cellspacing="0">
     <tr *ngFor="let cat of data.categories; let i = index">
