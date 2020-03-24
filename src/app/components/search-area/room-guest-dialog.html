@@ -1,12 +1,26 @@
-<h1 mat-dialog-title>Hi</h1>
+<h1 mat-dialog-title>Enter Room and Guest Counts{{data.categories}}</h1>
 <div mat-dialog-content>
-  <p>What's your favorite animal?</p>
-  <mat-form-field>
-    <mat-label>Favorite Animal</mat-label>
-    <input matInput>
-  </mat-form-field>
+  <button  mat-stroked-button color="primary" (click)="addCategories()">Add Category</button>
+  <form>
+  <table cellspacing="0">
+    <tr *ngFor="let cat of data.categories; let i = index">
+      <td>
+        <mat-form-field appearance="outline">
+          <mat-label># Of Rooms</mat-label>
+          <input matInput type="number" placeholder="1" [(ngModel)]="cat.roomCount" name="roomCount{{i}}">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field appearance="outline">
+          <mat-label># Of Adults</mat-label>
+          <input matInput type="number" placeholder="1"  [(ngModel)]="cat.adultCount" name="adultCount{{i}}">
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
+  </form>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="" cdkFocusInitial>Ok</button>
+  <button  mat-stroked-button  [mat-dialog-close]="data.categories">Cancel</button>
+  <button [ngStyle]="{marginLeft: '10px'}"  mat-stroked-button [mat-dialog-close]="data.categories" cdkFocusInitial>Done</button>
 </div>

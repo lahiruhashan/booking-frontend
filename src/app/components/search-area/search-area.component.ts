@@ -1,10 +1,14 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {MatDialogConfig} from '@angular/material';
+import {LocationService} from '../../services/location.service';
+import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs/index';
+import {map, startWith} from 'rxjs/internal/operators';
+import {Location} from '../../models/Location';
 
 export interface DialogData {
-  animal: string;
-  name: string;
+  categories: any [];
 }
 
 @Component({
@@ -14,30 +18,48 @@ export interface DialogData {
 })
 export class SearchAreaComponent implements OnInit {
 
-  animal: string;
-  name: string;
+  private categories: any [] = [{
+    roomCount: 1,
+    adultCount: 1
+  }];
   private dialogRef: any;
+  private locations: Location[];
+  private searchControl = new FormControl();
+  filteredLocations: Observable<Location []>;
 
-  constructor(public dialog: MatDialog) {
+  constructor(private dialog: MatDialog, private locationService: LocationService) {
   }
 
   ngOnInit() {
+    this.locationService.getAllLocations().subscribe(locations => {
+      this.locations = locations;
+      this.filteredLocations = this.searchControl.valueChanges
+        .pipe(
+          startWith(''),
+          map(location => location ? this._filterLocations(location) : this.locations.slice())
+        );
+    });
+  }
+
+  private _filterLocations(value: string): Location[] {
+    const filterValue = value.toLowerCase();
+
+    return this.locations.filter((location: Location) => location.locationName.toLowerCase().indexOf(filterValue) === 0);
   }
 
   openDialog(): void {
 
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      name: this.name,
-      animal: this.animal
+      categories: this.categories
     };
-    dialogConfig.width = '400px';
+    dialogConfig.width = '600px';
+    dialogConfig.disableClose = true;
 
     this.dialogRef = this.dialog.open(RoomGuestDialogComponent, dialogConfig);
 
     this.dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
+      this.categories = result;
     });
   }
 
@@ -54,8 +76,11 @@ export class RoomGuestDialogComponent {
               @Inject(MAT_DIALOG_DATA) public data: DialogData) {
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  addCategories(): void {
+    this.data.categories.push({
+      roomCount: 0,
+      adultCount: 0
+    });
   }
 
 }
