@@ -101,10 +101,7 @@ export class RoomGuestDialogComponent {
   }
 
   addCategories(): void {
-    this.data.categories.push({
-      numberOfRooms: 0,
-      numberOfAdults: 0
-    });
+    this.data.categories.push(new SearchCriteria(0, 0));
   }
 
 }

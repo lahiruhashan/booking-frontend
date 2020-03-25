@@ -21,6 +21,6 @@ export class SearchService {
   constructor(private http: HttpClient) { }
 
   search(searchModel: SearchModel): Observable<SearchResult[]> {
-    return this.http.post<SearchModel>(this.searchUrl, searchModel, httpOptions);
+    return this.http.post<SearchResult[]>(this.searchUrl, searchModel, httpOptions);
   }
 }
