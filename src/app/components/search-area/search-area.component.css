@@ -33,3 +33,21 @@
   width: 70% !important;
   height: 100%;
 }
+
+mat-chip-list {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.cg-result-card-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+app-search-result {
+  width: 33.3%;
+}

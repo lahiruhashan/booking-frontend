@@ -1,0 +1,49 @@
+<mat-card class="cg-result-card">
+  <mat-card-header>
+    <mat-card-title>{{data.hotelName}}</mat-card-title>
+    <mat-card-subtitle>{{data.location}}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image
+       src="https://pix10.agoda.net/hotelImages/2285473/126883305/5031cd85c441b736db1005c10e23ac44.jpg?s=1024x768"
+       alt="Photo of a Shiba Inu">
+  <mat-card-content>
+    <table>
+      <tr>
+        <td><span class="result-desc-text">Room Type </span></td>
+        <td>
+          <mat-chip-list>
+            <mat-chip selected [color]="primary">{{data.roomType}}</mat-chip>
+          </mat-chip-list>
+        </td>
+      </tr>
+      <tr>
+        <td> <span class="result-desc-text">Max Adults Per Room </span></td>
+        <td>
+          <mat-chip-list>
+            <mat-chip selected [color]="primary">{{data.maxAdultsPerRoom}}</mat-chip>
+          </mat-chip-list>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="result-desc-text">Number of Rooms  </span></td>
+        <td>
+          <mat-chip-list>
+            <mat-chip selected [color]="primary">{{data.numberOfRooms}}</mat-chip>
+          </mat-chip-list>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="result-desc-text">Price  </span></td>
+        <td>
+          <mat-chip-list>
+            <mat-chip selected [color]="primary">Rs. {{data.price}}</mat-chip>
+          </mat-chip-list>
+        </td>
+      </tr>
+    </table>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-stroked-button [ngStyle]="{color: '#16a085'}">Add to Favorites</button>
+    <button mat-stroked-button [ngStyle]="{marginLeft:'10px'}" color="primary">Make Reservation</button>
+  </mat-card-actions>
+</mat-card>

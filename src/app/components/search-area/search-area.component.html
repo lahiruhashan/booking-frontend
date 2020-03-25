@@ -4,10 +4,10 @@
       <mat-grid-tile>
         <mat-form-field class="outlined-input" appearance="outline">
           <mat-label>Location</mat-label>
-          <input matInput [formControl]="searchControl" [matAutocomplete]="auto">
+          <input matInput [formControl]="searchControl" [matAutocomplete]="auto" name="location">
           <mat-icon matSuffix>location_on</mat-icon>
           <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let location of filteredLocations | async" [value]="location.locationName">
+            <mat-option *ngFor="let location of filteredLocations | async"  [value]="location.locationName">
               <span>{{location.locationName}}</span>
             </mat-option>
           </mat-autocomplete>
@@ -16,7 +16,7 @@
       <mat-grid-tile>
         <mat-form-field class="outlined-input" appearance="outline">
           <mat-label>Check In Date</mat-label>
-          <input matInput [matDatepicker]="picker">
+          <input matInput [matDatepicker]="picker" [formControl]="dateControl">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -24,7 +24,7 @@
       <mat-grid-tile>
         <mat-form-field class="outlined-input" appearance="outline">
           <mat-label># Of Nights</mat-label>
-          <input matInput type="number" placeholder="7">
+          <input matInput type="number" placeholder="7" [formControl]="nightsNumberControl">
           <mat-icon matSuffix>nights_stay</mat-icon>
         </mat-form-field>
       </mat-grid-tile>
@@ -36,11 +36,19 @@
         </mat-form-field>
       </mat-grid-tile>
       <mat-grid-tile>
-        <button mat-raised-button class="cg-search-btn" color="primary">
+        <button (click)="onSubmit()" mat-raised-button class="cg-search-btn" color="primary">
           <mat-icon class="cg-search-btn-icon">search</mat-icon>
           <span class="cg-search-btn-text">Search</span>
         </button>
       </mat-grid-tile>
     </mat-grid-list>
+    <mat-chip-list *ngIf="categories.length > 0" class="category-chip-list" aria-label="Color selection">
+      <mat-chip *ngFor="let category of categories" selected>
+        {{category.numberOfRooms}} Room with {{category.numberOfAdults}} Adults
+      </mat-chip>
+    </mat-chip-list>
   </form>
+</mat-card>
+<mat-card class="cg-search-card cg-result-card-wrapper" *ngIf="searchResults.length > 0">
+  <app-search-result  *ngFor="let result of searchResults" [data]="result"></app-search-result>
 </mat-card>

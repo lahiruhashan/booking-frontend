@@ -18,6 +18,8 @@ import {MatNativeDateModule} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatChipsModule} from '@angular/material/chips';
+import { SearchResultComponent } from './components/search-result/search-result.component';
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     AppComponent,
     NavBarComponent,
     SearchAreaComponent,
-    RoomGuestDialogComponent
+    RoomGuestDialogComponent,
+    SearchResultComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatChipsModule
   ],
   entryComponents: [
     RoomGuestDialogComponent

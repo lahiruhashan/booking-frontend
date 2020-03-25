@@ -1,14 +1,18 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {MatDialogConfig} from '@angular/material';
+import {MatDialogConfig, ThemePalette} from '@angular/material';
 import {LocationService} from '../../services/location.service';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs/index';
 import {map, startWith} from 'rxjs/internal/operators';
 import {Location} from '../../models/Location';
+import {SearchService} from '../../services/search.service';
+import {SearchModel} from '../../models/SearchModel';
+import {SearchCriteria} from '../../models/SearchCriteria';
+import {SearchResult} from '../../models/SearchResult';
 
 export interface DialogData {
-  categories: any [];
+  categories: SearchCriteria [];
 }
 
 @Component({
@@ -18,16 +22,20 @@ export interface DialogData {
 })
 export class SearchAreaComponent implements OnInit {
 
-  private categories: any [] = [{
-    roomCount: 1,
-    adultCount: 1
-  }];
+  private categories: SearchCriteria [] = [];
   private dialogRef: any;
   private locations: Location[];
   private searchControl = new FormControl();
+  private dateControl = new FormControl();
+  private nightsNumberControl = new FormControl();
   filteredLocations: Observable<Location []>;
+  private searchResults: SearchResult[] = [];
 
-  constructor(private dialog: MatDialog, private locationService: LocationService) {
+
+  constructor(
+    private dialog: MatDialog,
+    private locationService: LocationService,
+    private searchService: SearchService) {
   }
 
   ngOnInit() {
@@ -39,6 +47,23 @@ export class SearchAreaComponent implements OnInit {
           map(location => location ? this._filterLocations(location) : this.locations.slice())
         );
     });
+  }
+
+  onSubmit(): void {
+    const selectedLocation = this._findSelectedLocationObject(this.searchControl.value);
+    const checkInDate = this.dateControl.value;
+    const numberOfNights = this.nightsNumberControl.value;
+    const searchCriteriaList = this.categories;
+    const searchModel = new SearchModel(new Date(checkInDate), numberOfNights, searchCriteriaList, selectedLocation);
+    this.searchService.search(searchModel).subscribe( result => {
+      this.searchResults = result;
+    });
+  }
+
+  private _findSelectedLocationObject(value: string): Location {
+    const valueLower = value.toLowerCase();
+
+    return this.locations.filter((location: Location) => location.locationName.toLowerCase() === valueLower)[0];
   }
 
   private _filterLocations(value: string): Location[] {
@@ -62,7 +87,6 @@ export class SearchAreaComponent implements OnInit {
       this.categories = result;
     });
   }
-
 }
 
 @Component({
@@ -78,8 +102,8 @@ export class RoomGuestDialogComponent {
 
   addCategories(): void {
     this.data.categories.push({
-      roomCount: 0,
-      adultCount: 0
+      numberOfRooms: 0,
+      numberOfAdults: 0
     });
   }
 
