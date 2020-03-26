@@ -1,6 +1,6 @@
 export class SearchCriteria {
-  private numberOfRooms: number;
-  private numberOfAdults: number;
+  numberOfRooms: number;
+  numberOfAdults: number;
 
   constructor(numberOfRooms: number, numberOfAdults: number) {
     this.numberOfRooms = numberOfRooms;

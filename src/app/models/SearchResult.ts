@@ -1,8 +1,8 @@
 export class SearchResult {
-  private hotelName: string;
-  private location: string;
-  private roomType: string;
-  private maxAdultsPerRoom: number;
-  private numberOfRooms: number;
-  private price: number;
+  hotelName: string;
+  location: string;
+  roomType: string;
+  maxAdultsPerRoom: number;
+  numberOfRooms: number;
+  price: number;
 }

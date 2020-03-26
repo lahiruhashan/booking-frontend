@@ -2,10 +2,10 @@ import {SearchCriteria} from './SearchCriteria';
 import {Location} from './Location';
 
 export class SearchModel {
-  private checkInDate: Date;
-  private numberOfNights: number;
-  private searchCriteriaList: SearchCriteria [];
-  private location: Location;
+  checkInDate: Date;
+  numberOfNights: number;
+  searchCriteriaList: SearchCriteria [];
+  location: Location;
 
 
   constructor(checkInDate: Date, numberOfNights: number, searchCriteriaList: SearchCriteria[], location: Location) {

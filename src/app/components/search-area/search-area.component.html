@@ -4,13 +4,14 @@
       <mat-grid-tile>
         <mat-form-field class="outlined-input" appearance="outline">
           <mat-label>Location</mat-label>
-          <input matInput [formControl]="searchControl" [matAutocomplete]="auto" name="location">
+          <input matInput [formControl]="locationControl" [matAutocomplete]="auto" name="location">
           <mat-icon matSuffix>location_on</mat-icon>
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let location of filteredLocations | async"  [value]="location.locationName">
               <span>{{location.locationName}}</span>
             </mat-option>
           </mat-autocomplete>
+          <mat-error *ngIf="locationControl.invalid">{{getLocationErrorMessage()}}</mat-error>
         </mat-form-field>
       </mat-grid-tile>
       <mat-grid-tile>
@@ -19,6 +20,7 @@
           <input matInput [matDatepicker]="picker" [formControl]="dateControl">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="dateControl.invalid">{{getDateErrorMessage()}}</mat-error>
         </mat-form-field>
       </mat-grid-tile>
       <mat-grid-tile>
@@ -26,13 +28,15 @@
           <mat-label># Of Nights</mat-label>
           <input matInput type="number" placeholder="7" [formControl]="nightsNumberControl">
           <mat-icon matSuffix>nights_stay</mat-icon>
+          <mat-error *ngIf="nightsNumberControl.invalid">{{getNightsNumberErrorMessage()}}</mat-error>
         </mat-form-field>
       </mat-grid-tile>
       <mat-grid-tile>
         <mat-form-field class="outlined-input" appearance="outline">
           <mat-label>Room Guest Count</mat-label>
-          <input readonly matInput type="text" (click)="openDialog()" placeholder="1 Room 2 adults">
+          <input readonly matInput type="text" [formControl]="roomGuestCountControl" (click)="openDialog()" placeholder="1 Room 2 adults">
           <mat-icon matSuffix (click)="openDialog()">people_alt</mat-icon>
+          <mat-error *ngIf="roomGuestCountControl.invalid">{{getRoomGuestErrorMessage()}}</mat-error>
         </mat-form-field>
       </mat-grid-tile>
       <mat-grid-tile>

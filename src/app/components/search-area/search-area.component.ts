@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {MatDialogConfig, ThemePalette} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MatDialogConfig} from '@angular/material';
 import {LocationService} from '../../services/location.service';
-import {FormControl} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {Observable} from 'rxjs/index';
 import {map, startWith} from 'rxjs/internal/operators';
 import {Location} from '../../models/Location';
@@ -22,26 +22,24 @@ export interface DialogData {
 })
 export class SearchAreaComponent implements OnInit {
 
+  filteredLocations: Observable<Location []>;
   private categories: SearchCriteria [] = [];
   private dialogRef: any;
   private locations: Location[];
-  private searchControl = new FormControl();
-  private dateControl = new FormControl();
-  private nightsNumberControl = new FormControl();
-  filteredLocations: Observable<Location []>;
+  private locationControl = new FormControl('', [Validators.required]);
+  private dateControl = new FormControl('', [Validators.required]);
+  private roomGuestCountControl = new FormControl('', [Validators.required]);
+  private nightsNumberControl = new FormControl('', [Validators.required]);
   private searchResults: SearchResult[] = [];
-
-
-  constructor(
-    private dialog: MatDialog,
-    private locationService: LocationService,
-    private searchService: SearchService) {
+  constructor(private dialog: MatDialog,
+              private locationService: LocationService,
+              private searchService: SearchService) {
   }
 
   ngOnInit() {
     this.locationService.getAllLocations().subscribe(locations => {
       this.locations = locations;
-      this.filteredLocations = this.searchControl.valueChanges
+      this.filteredLocations = this.locationControl.valueChanges
         .pipe(
           startWith(''),
           map(location => location ? this._filterLocations(location) : this.locations.slice())
@@ -50,26 +48,45 @@ export class SearchAreaComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const selectedLocation = this._findSelectedLocationObject(this.searchControl.value);
-    const checkInDate = this.dateControl.value;
-    const numberOfNights = this.nightsNumberControl.value;
-    const searchCriteriaList = this.categories;
-    const searchModel = new SearchModel(new Date(checkInDate), numberOfNights, searchCriteriaList, selectedLocation);
-    this.searchService.search(searchModel).subscribe( result => {
-      this.searchResults = result;
-    });
+    if (
+      !this.locationControl.invalid &&
+      !this.dateControl.invalid &&
+      !this.nightsNumberControl.invalid &&
+      !this.roomGuestCountControl.invalid
+    ) {
+      const selectedLocation = this._findSelectedLocationObject(this.locationControl.value);
+      const checkInDate = this.dateControl.value;
+      const numberOfNights = this.nightsNumberControl.value;
+      const searchCriteriaList = this.categories;
+      const searchModel = new SearchModel(new Date(checkInDate), numberOfNights, searchCriteriaList, selectedLocation);
+      this.searchService.search(searchModel).subscribe(result => {
+        this.searchResults = result;
+      });
+    }
   }
 
-  private _findSelectedLocationObject(value: string): Location {
-    const valueLower = value.toLowerCase();
-
-    return this.locations.filter((location: Location) => location.locationName.toLowerCase() === valueLower)[0];
+  getRoomGuestErrorMessage() {
+    if (this.roomGuestCountControl.hasError('required')) {
+      return 'You must enter the room-guest count';
+    }
   }
 
-  private _filterLocations(value: string): Location[] {
-    const filterValue = value.toLowerCase();
+  getDateErrorMessage() {
+    if (this.dateControl.hasError('required')) {
+      return 'You must select a date';
+    }
+  }
 
-    return this.locations.filter((location: Location) => location.locationName.toLowerCase().indexOf(filterValue) === 0);
+  getLocationErrorMessage() {
+    if (this.locationControl.hasError('required')) {
+      return 'You must select a location';
+    }
+  }
+
+  getNightsNumberErrorMessage() {
+    if (this.nightsNumberControl.hasError('required')) {
+      return 'You must enter the number of nights';
+    }
   }
 
   openDialog(): void {
@@ -85,7 +102,32 @@ export class SearchAreaComponent implements OnInit {
 
     this.dialogRef.afterClosed().subscribe(result => {
       this.categories = result;
+      this.setInputFieldValue(result);
     });
+  }
+
+  private setInputFieldValue(result: SearchCriteria []) {
+    if (result.length < 1) {
+      this.roomGuestCountControl.setValue(null);
+    } else {
+      let outputString = '';
+      result.forEach(res => {
+        outputString += (' [Room : ' + res.numberOfRooms).concat(' - Adults : ' + res.numberOfAdults + ']');
+      });
+      this.roomGuestCountControl.setValue(outputString);
+    }
+  }
+
+  private _findSelectedLocationObject(value: string): Location {
+    const valueLower = value.toLowerCase();
+
+    return this.locations.filter((location: Location) => location.locationName.toLowerCase() === valueLower)[0];
+  }
+
+  private _filterLocations(value: string): Location[] {
+    const filterValue = value.toLowerCase();
+
+    return this.locations.filter((location: Location) => location.locationName.toLowerCase().indexOf(filterValue) === 0);
   }
 }
 
