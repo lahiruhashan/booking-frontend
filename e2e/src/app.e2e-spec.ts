@@ -1,16 +1,19 @@
 import { AppPage } from './app.po';
 import { browser, logging } from 'protractor';
 
-describe('workspace-project App', () => {
+
+declare const angular: any;
+
+describe('Sun Travels App', () => {
   let page: AppPage;
 
   beforeEach(() => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display app title', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to technical-assignment-frontend!');
+    expect(page.getTitleText()).toEqual('Sun Travels');
   });
 
   afterEach(async () => {
